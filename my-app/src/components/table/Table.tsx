@@ -17,6 +17,7 @@ function Table(){
   const [totalItems, setTotalItems] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+  const [errors, setErrors] = useState<string>("");
 
   const handlePageChange = async (selectedPage: number) => {
     setCurrentPage(selectedPage);
@@ -47,6 +48,9 @@ function Table(){
     setItemsPerPage(newValue);
   };
 
+  const editSuccessful = document.getElementById('edit-successful');
+  const edidError = document.getElementById('error-change');
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -59,13 +63,21 @@ function Table(){
       });
 
       if (response.ok) {
-        console.log(response);
+        setEditItem(null);
+        if(!editSuccessful?.classList.contains('active')){
+          editSuccessful?.classList.add('active');
+        }
       } else {
-        // Обробка помилок
-        console.log(response);
         const errorData = await response.json();
-        console.log(errorData);
-        
+        let errorText = "";
+        let errorDataValues = Object.values(errorData);
+        for(let i=0;i<errorDataValues.length;++i){
+          errorText += errorDataValues[i]+'\n';
+        }
+        setErrors(errorText);
+        if(!edidError?.classList.contains('active')){
+          edidError?.classList.add('active');
+        }
       }
     } catch (error) {
       console.error('Помилка під час відправлення запиту:', error);
@@ -107,6 +119,7 @@ function Table(){
 
   return (
     <div>
+      <span id='edit-successful' className="done">Запис Змінено!</span>
       {data.length > 0 && columns.length > 0 ? (
         <>
           <table>
@@ -164,9 +177,10 @@ function Table(){
                       </>}
                     </>
                 ))}
-                <td>
+                <>
                   <button onClick={handleSend}>Зберегти</button>
-                </td>
+                  <span id='error-change' className="error">{errors}</span>
+                </>
               </div>
           </form>}
         </>

@@ -7,11 +7,10 @@ form {
       -ms-flex-direction: column;
           flex-direction: column;
   max-width: 300px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 div {
-  margin-bottom: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -65,4 +64,4 @@ button {
 }
 button:hover {
   background-color: #005ea2;
-}/*# sourceMappingURL=Login.css.map */
+}/*# sourceMappingURL=login.css.map */

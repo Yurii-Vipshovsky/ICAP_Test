@@ -76,3 +76,16 @@ button {
     padding: 5px;
   }
 }
+
+.done {
+  color: #138d13;
+  font-size: 14px;
+  margin-top: 5px;
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.3s, max-height 0.3s;
+  &.active {
+      opacity: 1;
+      max-height: 20px;
+  }
+}
